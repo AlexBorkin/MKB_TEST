@@ -1,6 +1,7 @@
 package com.mcb.creditfactory.service.car;
 
 import com.mcb.creditfactory.dto.CarDto;
+import com.mcb.creditfactory.dto.Collateral;
 import com.mcb.creditfactory.external.ExternalApproveService;
 import com.mcb.creditfactory.model.Car;
 import com.mcb.creditfactory.repository.CarRepository;
@@ -19,11 +20,12 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean approve(CarDto dto) {
-        return approveService.approve(new CarAdapter(dto)) == 0;
+        return approveService.approve(new CarAdapter(dto, carRepository)) == 0;
     }
 
     @Override
-    public Car save(Car car) {
+    public Car save(Car car)
+    {
         return carRepository.save(car);
     }
 
@@ -40,7 +42,8 @@ public class CarServiceImpl implements CarService {
                 dto.getModel(),
                 dto.getPower(),
                 dto.getYear(),
-                dto.getValue()
+//                dto.getValue(),
+                dto.getAssessedValues()
         );
     }
 
@@ -52,12 +55,46 @@ public class CarServiceImpl implements CarService {
                 car.getModel(),
                 car.getPower(),
                 car.getYear(),
-                car.getValue()
+//                car.getValue(),
+                car.getAssessedValues()
         );
     }
 
     @Override
     public Long getId(Car car) {
         return car.getId();
+    }
+
+    @Override
+    public Long saveCollateral(CarDto carDto)
+    {
+        boolean approved = this.approve(carDto);
+
+        if (!approved)
+        {
+            return null;
+        }
+
+        return Optional.of(carDto)
+                .map(this::fromDto)
+                .map(this::save)
+                .map(this::getId)
+                .orElse(null);
+    }
+
+    @Override
+    public Collateral getInfo(CarDto carDto)
+    {
+        if (!(carDto instanceof CarDto))
+        {
+            throw new IllegalArgumentException();
+        }
+
+        return Optional.of(carDto)
+                .map(this::fromDto)
+                .map(this::getId)
+                .flatMap(this::load)
+                .map(this::toDTO)
+                .orElse(null);
     }
 }
