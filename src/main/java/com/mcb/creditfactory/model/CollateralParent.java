@@ -10,31 +10,33 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Data
-//@MappedSuperclass
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Entity
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "COLLATERAL_PARENT")
+@Table(name = "COLLATERAL_PARENT",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "brand", "model", "year"},
+                                               name = "brand_model_year")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CollateralParent
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     private CollateralType type;
-
     private String brand;
     private String model;
     private Short year;
 
-
-    @OneToMany(mappedBy = "collateralParent", targetEntity = AssessedValues.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  //  @JoinColumn(name = "item_Id")
-    private List<AssessedValues> assessedValues = new ArrayList<>();
+    @OneToMany(mappedBy = "collateralParent",
+               targetEntity = AssessedValues.class,
+               cascade = CascadeType.ALL,
+               fetch = FetchType.LAZY)
+   private List<AssessedValues> assessedValues = new ArrayList<>();
 
 }

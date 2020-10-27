@@ -2,6 +2,7 @@ package com.mcb.creditfactory.controller;
 
 import com.mcb.creditfactory.dto.Collateral;
 import com.mcb.creditfactory.model.Airplane;
+import com.mcb.creditfactory.model.Car;
 import com.mcb.creditfactory.service.CollateralService;
 import com.mcb.creditfactory.service.ICollateralService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class CollateralObjectController {
 
     @PostMapping("/collateral/airplane")
     public HttpEntity<Long> save(@RequestBody Airplane object)
+    {
+        return null;
+//        Long id = service.saveCollateral(object);
+//        return id != null ? ResponseEntity.ok(id) : ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/collateral/car")
+    public HttpEntity<Long> save(@RequestBody Car object)
     {
         return null;
 //        Long id = service.saveCollateral(object);

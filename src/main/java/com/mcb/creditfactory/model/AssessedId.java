@@ -15,8 +15,6 @@ public class AssessedId implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    //@ManyToOne
-  //  @Column(name = "item_id")
     @ManyToOne(targetEntity = CollateralParent.class)
     @JoinColumn(name = "item_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_Collateral_Id"))
     private long itemId;

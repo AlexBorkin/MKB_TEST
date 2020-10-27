@@ -3,12 +3,15 @@ package com.mcb.creditfactory.service.car;
 import com.mcb.creditfactory.dto.CarDto;
 import com.mcb.creditfactory.dto.Collateral;
 import com.mcb.creditfactory.external.ExternalApproveService;
+import com.mcb.creditfactory.model.AssessedValues;
 import com.mcb.creditfactory.model.Car;
 import com.mcb.creditfactory.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -42,7 +45,6 @@ public class CarServiceImpl implements CarService {
                 dto.getModel(),
                 dto.getPower(),
                 dto.getYear(),
-//                dto.getValue(),
                 dto.getAssessedValues()
         );
     }
@@ -55,7 +57,6 @@ public class CarServiceImpl implements CarService {
                 car.getModel(),
                 car.getPower(),
                 car.getYear(),
-//                car.getValue(),
                 car.getAssessedValues()
         );
     }
@@ -78,6 +79,19 @@ public class CarServiceImpl implements CarService {
         return Optional.of(carDto)
                 .map(this::fromDto)
                 .map(this::save)
+                .map(car ->
+                {
+                    List<AssessedValues> list = car.getAssessedValues().stream()
+                            .map(assessedValues ->
+                            {
+                                assessedValues.setCollateralParent(car);
+                                return assessedValues;
+                            }).collect(Collectors.toList());
+
+                    car.setAssessedValues(list);
+
+                    return car;
+                })
                 .map(this::getId)
                 .orElse(null);
     }

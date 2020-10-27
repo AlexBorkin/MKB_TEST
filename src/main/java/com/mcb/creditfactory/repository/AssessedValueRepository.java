@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface AssessedValueRepository extends CrudRepository<AssessedValues, Long>
 {
-   AssessedValues findFirstByCollateralParentAndTypeOrderByAssesedDateDesc(CollateralParent id, CollateralType type);
+    AssessedValues findFirstByCollateralParentOrderByAssesedDateDesc(CollateralParent id);
 
-    List<AssessedValues> findByCollateralParentAndTypeOrderByAssesedDateDesc(CollateralParent id, CollateralType type);
+    List<AssessedValues> findByCollateralParentOrderByAssesedDateDesc(CollateralParent id);
+
+
 }

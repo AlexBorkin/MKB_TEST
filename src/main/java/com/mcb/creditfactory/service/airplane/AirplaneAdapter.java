@@ -3,57 +3,55 @@ package com.mcb.creditfactory.service.airplane;
 import com.mcb.creditfactory.dto.AirplaneDto;
 import com.mcb.creditfactory.external.CollateralObject;
 import com.mcb.creditfactory.external.CollateralType;
-import com.mcb.creditfactory.model.Airplane;
 import com.mcb.creditfactory.model.AssessedValues;
-import com.mcb.creditfactory.repository.AirplaneRepository;
-import com.mcb.creditfactory.repository.AssessedValueRepository;
-import com.mcb.creditfactory.repository.CarRepository;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-//@AllArgsConstructor
 @Data
 public class AirplaneAdapter implements CollateralObject
 {
-    //@Autowired
-    private AirplaneDto airplane;
-    @Autowired
-    private AirplaneRepository airplaneRepository;
-    @Autowired
-    private AssessedValueRepository assessedValueRepository;
+    private AirplaneDto airplaneDto;
+    private AssessedValues assessedValues;
 
-    public AirplaneAdapter(AirplaneDto airplane)
+    public AirplaneAdapter(AirplaneDto airplaneDto)
     {
-        this.airplane = airplane;
-    }
+        this.airplaneDto    = airplaneDto;
+        this.assessedValues = airplaneDto.getAssessedValues().stream()
+                                        .max(AssessedValues::compareTo).get();
 
-    //    private AssessedValues assessedValues
-//            = assessedValueRepository.findFirstByCollateralParentAndTypeOrderByAssesedDateDesc(
-//                    airplane.,
-//            CollateralType.AIRPLANE)
+    }
 
     @Override
     public BigDecimal getValue()
     {
-        return null;
+        if (assessedValues != null)
+        {
+            return assessedValues.getValue();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
     public Short getYear()
     {
-        return airplane.getYear();
+        return airplaneDto.getYear();
     }
 
     @Override
     public LocalDate getDate()
     {
-        //TODO Максимальная дата оценки!
-        return null;
+        if (assessedValues != null)
+        {
+            return assessedValues.getAssesedDate();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
