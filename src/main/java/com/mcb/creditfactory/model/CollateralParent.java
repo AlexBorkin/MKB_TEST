@@ -25,8 +25,7 @@ public abstract class CollateralParent
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
-
-    //private CollateralType type;
+  
     private String brand;
     private String model;
     @Column(name = "year_of_issue")
