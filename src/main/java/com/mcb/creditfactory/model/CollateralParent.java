@@ -18,9 +18,6 @@ import java.util.TreeSet;
 @NoArgsConstructor
 @Entity
 @Table(name = "COLLATERAL_PARENT")
-//        ,
-//        uniqueConstraints = {@UniqueConstraint(columnNames = {"brand", "model", "year"},
-//                                               name = "brand_model_year")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CollateralParent
 {
