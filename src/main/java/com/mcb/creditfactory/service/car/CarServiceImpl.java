@@ -22,8 +22,9 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
 
     @Override
-    public boolean approve(CarDto dto) {
-        return approveService.approve(new CarAdapter(dto, carRepository)) == 0;
+    public boolean approve(CarDto dto)
+    {
+        return approveService.approve(new CarAdapter(dto)) == 0;
     }
 
     @Override
@@ -33,12 +34,14 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Optional<Car> load(Long id) {
+    public Optional<Car> load(Long id)
+    {
         return carRepository.findById(id);
     }
 
     @Override
-    public Car fromDto(CarDto dto) {
+    public Car fromDto(CarDto dto)
+    {
         return new Car(
                 dto.getId(),
                 dto.getBrand(),
@@ -50,7 +53,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarDto toDTO(Car car) {
+    public CarDto toDTO(Car car)
+    {
         return new CarDto(
                 car.getId(),
                 car.getBrand(),
@@ -62,7 +66,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Long getId(Car car) {
+    public Long getId(Car car)
+    {
         return car.getId();
     }
 
@@ -78,7 +83,6 @@ public class CarServiceImpl implements CarService {
 
         return Optional.of(carDto)
                 .map(this::fromDto)
-                .map(this::save)
                 .map(car ->
                 {
                     List<AssessedValues> list = car.getAssessedValues().stream()
@@ -92,6 +96,7 @@ public class CarServiceImpl implements CarService {
 
                     return car;
                 })
+                .map(this::save)
                 .map(this::getId)
                 .orElse(null);
     }

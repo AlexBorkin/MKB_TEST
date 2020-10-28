@@ -19,20 +19,12 @@ public class AirplaneAdapter implements CollateralObject
         this.airplaneDto    = airplaneDto;
         this.assessedValues = airplaneDto.getAssessedValues().stream()
                                         .max(AssessedValues::compareTo).get();
-
     }
 
     @Override
     public BigDecimal getValue()
     {
-        if (assessedValues != null)
-        {
-            return assessedValues.getValue();
-        }
-        else
-        {
-            return null;
-        }
+        return assessedValues != null ? assessedValues.getValue() : null;
     }
 
     @Override
@@ -44,14 +36,7 @@ public class AirplaneAdapter implements CollateralObject
     @Override
     public LocalDate getDate()
     {
-        if (assessedValues != null)
-        {
-            return assessedValues.getAssesedDate();
-        }
-        else
-        {
-            return null;
-        }
+        return assessedValues != null ? assessedValues.getAssesedDate() : null;
     }
 
     @Override

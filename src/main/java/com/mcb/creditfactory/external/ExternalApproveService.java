@@ -20,21 +20,26 @@ public class ExternalApproveService
 
     public int approve(CollateralObject object)
     {
-        if (
-           //     object.getDate()  == null ||
+        if (object.getDate()  == null ||
             object.getYear()  == null ||
-          //  object.getValue() == null ||
+            object.getValue() == null ||
             object.getType()  == null)
         {
             return -1;
         }
 
         int code;
+
         switch (object.getType())
         {
-            case CAR: code = approveCar(object); break;
-            case AIRPLANE: code = approvePlane(object); break;
-            default: code = -100;
+            case CAR:
+                code = approveCar(object);
+                break;
+            case AIRPLANE:
+                code = approvePlane(object);
+                break;
+            default:
+                code = -100;
         }
 
         return code;
@@ -64,14 +69,14 @@ public class ExternalApproveService
         {
             return -20;
         }
-//        if (object.getDate().isBefore(MIN_ASSESS_DATE))
-//        {
-//            return -21;
-//        }
-//        if (object.getValue().compareTo(MIN_PLANE_VALUE) < 0)
-//        {
-//            return -22;
-//        }
+        if (object.getDate().isBefore(MIN_ASSESS_DATE))
+        {
+            return -21;
+        }
+        if (object.getValue().compareTo(MIN_PLANE_VALUE) < 0)
+        {
+            return -22;
+        }
 
         return 0;
     }

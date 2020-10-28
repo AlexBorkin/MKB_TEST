@@ -1,8 +1,10 @@
 package com.mcb.creditfactory.service.car;
 
+import com.mcb.creditfactory.dto.AirplaneDto;
 import com.mcb.creditfactory.dto.CarDto;
 import com.mcb.creditfactory.external.CollateralObject;
 import com.mcb.creditfactory.external.CollateralType;
+import com.mcb.creditfactory.model.AssessedValues;
 import com.mcb.creditfactory.repository.CarRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,30 +18,38 @@ import java.time.LocalDate;
 @Data
 public class CarAdapter implements CollateralObject
 {
-    @Autowired
-    private CarDto car;
+    private CarDto carDto;
+    private AssessedValues assessedValues;
 
-    @Autowired
-    private CarRepository carRepository;
-
-    @Override
-    public BigDecimal getValue() {
-        return null; //car.getValue();
+    public CarAdapter(CarDto carDto)
+    {
+        this.carDto    = carDto;
+        this.assessedValues = carDto.getAssessedValues().stream()
+                                    .max(AssessedValues::compareTo).get();
     }
 
     @Override
-    public Short getYear() {
-        return car.getYear();
+    public BigDecimal getValue()
+    {
+        return assessedValues != null ? assessedValues.getValue() : null;
     }
 
     @Override
-    public LocalDate getDate() {
+    public Short getYear()
+    {
+        return carDto.getYear();
+    }
+
+    @Override
+    public LocalDate getDate()
+    {
         // Для автомобилей дата оценки не используется, поэтому всегда берем текущую
         return LocalDate.now();
     }
 
     @Override
-    public CollateralType getType() {
+    public CollateralType getType()
+    {
         return CollateralType.CAR;
     }
 }

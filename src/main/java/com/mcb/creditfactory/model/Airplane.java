@@ -42,7 +42,6 @@ public class Airplane extends CollateralParent
         this.setYear(year);
         this.fuelcapacity = fuelcapacity;
         this.seats = seats;
-        this.setType(CollateralType.AIRPLANE);
         this.setAssessedValues(assessedValues);
     }
 

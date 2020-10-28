@@ -22,9 +22,6 @@ public class AirplaneServiceImpl implements AirplaneService
     @Autowired
     private AirplaneRepository airplaneRepository;
 
-    @Autowired
-    private AssessedValueRepository assessedValueRepository;
-
     @Override
     public boolean approve(AirplaneDto dto)
     {
@@ -80,16 +77,16 @@ public class AirplaneServiceImpl implements AirplaneService
     @Override
     public Long saveCollateral(AirplaneDto airplaneDto)
     {
-        if (airplaneDto.getId() != null)
-        {
-            Airplane airplaneCurr = airplaneRepository.findById(airplaneDto.getId()).orElse(null);
-
-            List<AssessedValues> list = Stream.concat(airplaneCurr.getAssessedValues().stream(),
-                                                      airplaneDto.getAssessedValues().stream())
-                                                       .sorted(Comparator.comparing(AssessedValues::getAssesedDate))
-                                                       .collect(Collectors.toList());
-            airplaneDto.setAssessedValues(list);
-        }
+//        if (airplaneDto.getId() != null)
+//        {
+//            Airplane airplaneCurr = airplaneRepository.findById(airplaneDto.getId()).orElse(null);
+//
+//            List<AssessedValues> list = Stream.concat(airplaneCurr.getAssessedValues().stream(),
+//                                                      airplaneDto.getAssessedValues().stream())
+//                                                       .sorted(Comparator.comparing(AssessedValues::getAssesedDate))
+//                                                       .collect(Collectors.toList());
+//            airplaneDto.setAssessedValues(list);
+//        }
 
         boolean approved = this.approve(airplaneDto);
 

@@ -17,9 +17,10 @@ import java.util.TreeSet;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "COLLATERAL_PARENT",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "brand", "model", "year"},
-                                               name = "brand_model_year")})
+@Table(name = "COLLATERAL_PARENT")
+//        ,
+//        uniqueConstraints = {@UniqueConstraint(columnNames = {"brand", "model", "year"},
+//                                               name = "brand_model_year")})
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CollateralParent
 {
@@ -28,9 +29,10 @@ public abstract class CollateralParent
     @Column(name = "id")
     private long id;
 
-    private CollateralType type;
+    //private CollateralType type;
     private String brand;
     private String model;
+    @Column(name = "year_of_issue")
     private Short year;
 
     @OneToMany(mappedBy = "collateralParent",

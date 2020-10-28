@@ -6,10 +6,4 @@ import java.util.Optional;
 
 public interface AirplaneService extends ICollateralService<AirplaneDto, Airplane>
 {
-//    boolean approve(AirplaneDto dto);
-//    Airplane save(Airplane airplane);
-//    Optional<Airplane> load(Long id);
-//    Airplane fromDto(AirplaneDto dto);
-//    AirplaneDto toDTO(Airplane airplane);
-//    Long getId(Airplane airplane);
 }

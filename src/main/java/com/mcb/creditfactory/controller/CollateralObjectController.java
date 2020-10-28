@@ -30,26 +30,4 @@ public class CollateralObjectController {
         Collateral info = service.getInfo(object);
         return info != null ? ResponseEntity.ok(info) : ResponseEntity.notFound().build();
     }
-
-    @PostMapping("/collateral/airplane")
-    public HttpEntity<Long> save(@RequestBody Airplane object)
-    {
-        return null;
-//        Long id = service.saveCollateral(object);
-//        return id != null ? ResponseEntity.ok(id) : ResponseEntity.badRequest().build();
-    }
-
-    @PostMapping("/collateral/car")
-    public HttpEntity<Long> save(@RequestBody Car object)
-    {
-        return null;
-//        Long id = service.saveCollateral(object);
-//        return id != null ? ResponseEntity.ok(id) : ResponseEntity.badRequest().build();
-    }
-
-    @GetMapping("/docs")
-    public RedirectView getSwaggerDocs()
-    {
-        return new RedirectView("/swagger-ui.html");
-    }
 }

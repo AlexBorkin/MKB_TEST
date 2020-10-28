@@ -37,7 +37,7 @@ public class Car extends CollateralParent
         this.setModel(model);
         this.power = power;
         this.setYear(year);
-        this.setType(CollateralType.CAR);
+       // this.setType(CollateralType.CAR);
         this.setAssessedValues(assessedValues);
     }
 }

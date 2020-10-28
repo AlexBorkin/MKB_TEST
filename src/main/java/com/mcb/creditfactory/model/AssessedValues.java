@@ -37,7 +37,9 @@ public class AssessedValues implements Comparable<AssessedValues>
     private LocalDate assesedDate;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "collateral_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_Collateral_Id"))
+    @JoinColumn(name = "collateral_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_Collateral_Id"))
     @JsonIgnore
     private CollateralParent collateralParent;
 
@@ -55,41 +57,18 @@ public class AssessedValues implements Comparable<AssessedValues>
 
         AssessedValues that = (AssessedValues) o;
 
-        return assesedDate.equals(that.assesedDate);
+        if (!assesedDate.equals(that.assesedDate))
+        {
+            return false;
+        }
+        return collateralParent.equals(that.collateralParent);
     }
 
     @Override
     public int hashCode()
     {
-        return assesedDate.hashCode();
+        int result = assesedDate.hashCode();
+        result = 31 * result + collateralParent.hashCode();
+        return result;
     }
-
-    //    @Override
-//    public boolean equals(Object o)
-//    {
-//        if (this == o)
-//        {
-//            return true;
-//        }
-//        if (!(o instanceof AssessedValues))
-//        {
-//            return false;
-//        }
-//
-//        AssessedValues that = (AssessedValues) o;
-//
-//        if (!assesedDate.equals(that.assesedDate))
-//        {
-//            return false;
-//        }
-//        return collateralParent.equals(that.collateralParent);
-//    }
-//
-//    @Override
-//    public int hashCode()
-//    {
-//        int result = assesedDate.hashCode();
-//        result = 31 * result + collateralParent.hashCode();
-//        return result;
-//    }
 }
